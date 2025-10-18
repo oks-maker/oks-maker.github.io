@@ -39,6 +39,14 @@
         linear-gradient(180deg, #0f0f11 0%, #0f0f11 60%, #101317 100%);
       overflow: hidden;
     }
+    .hero-full::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.10));
+  z-index: 1;           /* sits between bg and text */
+  pointer-events: none;
+}
     .hero-wrap { max-width: 980px; padding: 80px 20px 40px; text-align: center }
     .hero-wrap { opacity: 1 !important; transform: none !important; }
     .pill {
