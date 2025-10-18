@@ -5,91 +5,170 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>All Set Hydration</title>
   <meta name="description" content="Sport-specific hydration mixes for real performance, recovery, and everyday movement. Wholesale inquiries only.">
-  <link rel="icon" href="favicon.ico">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <style>
-    :root{--bg:#0f0f11;--card:#15171a;--text:#f6f7f9;--muted:#b8bec6;--accent:#7ee0ff}
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
-    a{color:var(--accent);text-decoration:none}
-    a:hover{text-decoration:underline}
-    .wrap{max-width:920px;margin:0 auto;padding:24px}
-    header{display:flex;align-items:center;gap:16px;padding:24px 0;border-bottom:1px solid #23262b}
-    .logo{width:56px;height:56px;object-fit:contain;border-radius:8px;background:#222}
-    .brand{font-size:22px;font-weight:700;letter-spacing:.3px}
-    .hero{padding:28px 0 8px}
-    .pill{display:inline-block;background:#1c2026;border:1px solid #2a2f37;padding:6px 12px;border-radius:999px;color:var(--muted);font-size:14px}
-    h1{font-size:34px;line-height:1.15;margin:14px 0 8px}
-    p.lead{color:var(--muted);font-size:18px;margin:0 0 14px}
-    .cta{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0}
-    .btn{display:inline-block;padding:12px 16px;border-radius:10px;border:1px solid #2a2f37;background:#1a1d22}
-    .btn:hover{background:#1d2026}
-    .btn.primary{background:#1095c1;border-color:#1095c1;color:white}
-    .grid{display:grid;grid-template-columns:1fr;gap:18px;margin:28px 0}
-    .card{background:var(--card);border:1px solid #23262b;border-radius:16px;padding:18px}
-    h2{margin:0 0 8px;font-size:22px}
-    .me{width:200px;
-    height:200px;
-    object-fit:cover;
-    border-radius:50%;
-    border:2px solid #2a2f37;
-    margin:0 auto 14px;
-    display:block;
-       .about-img {
-    width:100%;
-    max-width:500px;
-    border-radius:12px;
-    margin:0 auto 14px;
-    display:block;
-    border:1px solid #2a2f37;
-    footer{margin:32px 0 16px;padding-top:18px;border-top:1px solid #23262b;color:var(--muted);font-size:14px}
-    .small{font-size:14px;color:var(--muted)}
-    .stack{display:flex;flex-direction:column;gap:8px}
-    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size:13px; color:#9aa2ab}
+    :root { --bg:#0f0f11; --card:#15171a; --text:#f6f7f9; --muted:#b8bec6; --accent:#7ee0ff; }
+    * { box-sizing: border-box }
+    html { scroll-behavior: smooth }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font: 16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
+    }
+    a { color: var(--accent); text-decoration: none }
+    a:hover { text-decoration: underline }
+
+    /* Sticky header that gains shadow after scroll */
+    .site-header {
+      position: sticky; top: 0; z-index: 50; backdrop-filter: blur(6px);
+      background: rgba(15,15,17,0.6); border-bottom: 1px solid rgba(35,38,43,0.6);
+      transition: box-shadow .2s ease, background .2s ease;
+    }
+    .site-header.scrolled { background: rgba(15,15,17,0.9); box-shadow: 0 6px 20px rgba(0,0,0,.25) }
+    .nav { max-width: 980px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; gap: 12px }
+    .logo { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; background: #222 }
+    .brand { font-weight: 700; letter-spacing: .3px }
+
+    /* Full-screen opening hero */
+    .hero-full {
+      min-height: 100svh; display: grid; place-items: center; position: relative;
+      background:
+        radial-gradient(1200px 600px at 70% -10%, rgba(126,224,255,.08), transparent),
+        radial-gradient(900px 500px at 10% 110%, rgba(126,224,255,.06), transparent),
+        linear-gradient(180deg, #0f0f11 0%, #0f0f11 60%, #101317 100%);
+      overflow: hidden;
+    }
+    .hero-wrap { max-width: 980px; padding: 80px 20px 40px; text-align: center }
+    .pill {
+      display: inline-block; background:#1c2026; border:1px solid #2a2f37;
+      padding:6px 12px; border-radius:999px; color:var(--muted); font-size:14px;
+    }
+    .hero-title { font-size: clamp(28px, 5vw, 54px); line-height: 1.05; margin: 14px 0 10px }
+    .lead { color: var(--muted); font-size: clamp(16px, 2.2vw, 20px); margin: 0 auto 18px; max-width: 800px }
+    .cta { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 12px }
+    .btn { display: inline-block; padding:12px 16px; border-radius:10px; border:1px solid #2a2f37; background:#1a1d22 }
+    .btn:hover { background:#1d2026 }
+    .btn.primary { background:#1095c1; border-color:#1095c1; color:white }
+
+    /* Optional hero background image behind content */
+    .hero-bg {
+      position: absolute; inset: 0; opacity: .18; background-position: center; background-size: cover; pointer-events: none;
+      /* Replace hero.jpg with a subtle texture/product shot or comment this out to disable: */
+      background-image: url('hero.jpg');
+    }
+
+    /* Scroll cue */
+    .scroll-cue {
+      position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+      color: var(--muted); font-size: 14px; display: grid; place-items: center; gap: 6px;
+      opacity: .85;
+    }
+    .mouse {
+      width: 22px; height: 34px; border: 2px solid var(--muted); border-radius: 16px; position: relative;
+    }
+    .wheel {
+      width: 2px; height: 6px; background: var(--muted); position: absolute; left: 50%; top: 6px; transform: translateX(-50%);
+      border-radius: 2px; animation: wheel 1.4s infinite;
+    }
+    @keyframes wheel { 0%{opacity:0; transform: translate(-50%,0)} 40%{opacity:1} 100%{opacity:0; transform: translate(-50%,10px)} }
+
+    /* Content wrapper */
+    .wrap { max-width: 920px; margin: 0 auto; padding: 24px 20px 32px }
+    .hero-note { margin-top: 10px; font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace; font-size:13px; color:#9aa2ab }
+
+    /* Cards and grid stacked */
+    .grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin: 28px 0 }
+    .card { background: var(--card); border: 1px solid #23262b; border-radius: 16px; padding: 24px }
+    h1 { font-size: 34px; line-height: 1.15; margin: 14px 0 8px }
+    h2 { margin: 0 0 8px; font-size: 22px }
+
+    /* Images */
+    .about-img {
+      width: 100%; max-width: 500px; border-radius: 12px; margin: 0 auto 14px; display: block; border: 1px solid #2a2f37;
+    }
+    .me {
+      width: 200px; height: 200px; object-fit: cover; border-radius: 50%;
+      border: 2px solid #2a2f37; margin: 0 auto 14px; display: block;
+    }
+
+    footer { margin: 32px 0 16px; padding-top: 18px; border-top: 1px solid #23262b; color: var(--muted); font-size: 14px }
+
+    /* Fade-in on scroll */
+    .reveal { opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease }
+    .reveal.show { opacity: 1; transform: none }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <!-- Replace logo.png with your actual file name -->
+  <!-- Header -->
+  <header class="site-header" id="siteHeader">
+    <nav class="nav">
       <img src="logo.png" alt="All Set logo" class="logo">
       <div class="brand">All Set Hydration</div>
-    </header>
+      <!-- optional right-side link: <div style="margin-left:auto"><a href="#content">About</a></div> -->
+    </nav>
+  </header>
 
-    <section class="hero">
+  <!-- Opening hero -->
+  <section class="hero-full" id="top">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-wrap reveal">
       <span class="pill">Wholesale inquiries only</span>
-      <h1>Sport-specific hydration that actually fits the sport</h1>
+      <h1 class="hero-title">Sport-specific hydration that actually fits the sport</h1>
       <p class="lead">
         Interested in partnership opportunities? Contact us for wholesale details or to learn more about becoming an All Set brand ambassador. We’re currently recruiting ambassadors on the UT campus.
       </p>
       <div class="cta">
         <a class="btn primary" href="mailto:drinkallset@gmail.com?subject=Wholesale%20Inquiry%20%2F%20Ambassador%20Program">Email: drinkallset@gmail.com</a>
+        <a class="btn" href="#content">Learn more</a>
       </div>
-      <p class="mono">Wholesale inquiries only.</p>
-    </section>
+      <div class="hero-note">Wholesale inquiries only.</div>
+    </div>
+    <a class="scroll-cue" href="#content" aria-label="Scroll to content">
+      <div class="mouse"><div class="wheel"></div></div>
+      <div>Scroll</div>
+    </a>
+  </section>
 
+  <!-- Main content -->
+  <main id="content" class="wrap">
     <section class="grid">
-      <article class="card">
+      <!-- About Us -->
+      <article class="card reveal">
         <h2>About Us</h2>
-        <img src="about.png" alt="All Set hydration mixes" class="me">
+        <!-- Replace about.png with your brand/product image or remove if not needed -->
+        <img src="about.png" alt="All Set hydration mixes" class="about-img">
         <p>At All Set, we believe athletes and active people deserve more than generic sports drinks. Every sport places different demands on the body, and hydration should be tailored to meet those needs. That’s why we created a line of single-serve hydration mixes designed for real performance, recovery, and everyday movement.</p>
         <p>Our formulas are built on simplicity and effectiveness: clean electrolytes, balanced carbohydrates, and flavors that keep you reaching for your bottle. Produced in licensed commercial kitchens here in Austin, All Set is committed to quality, compliance, and sustainability. We’re here to help you stay fueled, focused, and ready for whatever comes next.</p>
       </article>
 
-      <article class="card">
+      <!-- About Me -->
+      <article class="card reveal">
         <h2>About Me</h2>
-        <div class="stack">
-          <!-- Replace olivia.jpg with your actual file name or remove this img if you prefer text only -->
-          <img src="olivia.jpg" alt="Olivia Kate Stephens" class="me">
-          <p>I’m Olivia Kate Stephens, the founder of All Set. As an Ironman triathlete and lifelong athlete, I know firsthand how important hydration is to training and competition. I’ve spent years experimenting with fueling strategies during races, and I noticed a gap: most products are one-size-fits-all.</p>
-          <p>My goal with All Set is simple: to create hydration that matches the unique demands of different sports, and to do it in a way that’s transparent, practical, and trustworthy. When I’m not building All Set, you’ll probably find me swimming laps, cycling Austin’s hills, or exploring new trails.</p>
-        </div>
+        <!-- Replace olivia.jpg with your headshot -->
+        <img src="olivia.jpg" alt="Olivia Kate Stephens" class="me">
+        <p>I’m Olivia Kate Stephens, the founder of All Set. As an Ironman triathlete and lifelong athlete, I know firsthand how important hydration is to training and competition. I’ve spent years experimenting with fueling strategies during races, and I noticed a gap: most products are one-size-fits-all.</p>
+        <p>My goal with All Set is simple: to create hydration that matches the unique demands of different sports, and to do it in a way that’s transparent, practical, and trustworthy. When I’m not building All Set, you’ll probably find me swimming laps, cycling Austin’s hills, or exploring new trails.</p>
       </article>
     </section>
 
     <footer>
       © <span id="y"></span> All Set Hydration • <a href="mailto:drinkallset@gmail.com">drinkallset@gmail.com</a>
     </footer>
-  </div>
-  <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+  </main>
+
+  <script>
+    // Year stamp
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Header shadow toggle
+    const header = document.getElementById('siteHeader');
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 10);
+    onScroll(); window.addEventListener('scroll', onScroll);
+
+    // Reveal on scroll
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+    }, { threshold: .14 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
 </body>
 </html>
